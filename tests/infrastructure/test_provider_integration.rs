@@ -166,18 +166,14 @@ impl MockLLMProvider {
     pub async fn process_request(&self, request: &LLMRequest) -> Result<LLMResponse, String> {
         // Validate model
         if !self.models.contains(&request.model) {
-            return Err(format!("Model {} not available", request.model));
+            return Err(format!("Model {request.model} not available"));
         }
 
         // Simulate processing time
         tokio::time::sleep(self.response_delay).await;
 
         // Generate mock response
-        let content = format!(
-            "Mock response from {} using model {} for: {}",
-            self.provider_id,
-            request.model,
-            request.messages.last()
+        let content = format!("Mock response from {self.provider_id} using model {request.model} for: {request.messages.last(}")
                 .map(|m| &m.content)
                 .unwrap_or(&"empty".to_string())
         );
@@ -197,7 +193,7 @@ impl MockLLMProvider {
     ) -> Result<(), String> {
         // Validate model
         if !self.models.contains(&request.model) {
-            return Err(format!("Model {} not available", request.model));
+            return Err(format!("Model {request.model} not available"));
         }
 
         // Generate mock streaming response
@@ -297,7 +293,7 @@ impl RequestManager {
         }
 
         self.active_requests.remove(&request_id);
-        Err(format!("Failed after {} retries: {}", self.max_retries, last_error))
+        Err(format!("Failed after {self.max_retries} retries: {last_error}"))
     }
 
     pub fn get_active_count(&self) -> usize {

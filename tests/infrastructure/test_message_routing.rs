@@ -219,7 +219,7 @@ impl MessageRouter {
             TransformationType::ExtractField { field_path } => {
                 self.get_field_value(payload, field_path)
                     .cloned()
-                    .ok_or_else(|| format!("Field {} not found", field_path))
+                    .ok_or_else(|| format!("Field {field_path} not found"))
             }
             TransformationType::AddMetadata { metadata } => {
                 let mut result = payload.clone();
@@ -261,7 +261,7 @@ impl MessageTransformer {
     pub fn transform(&self, name: &str, payload: &JsonValue) -> Result<JsonValue, String> {
         self.transformations
             .get(name)
-            .ok_or_else(|| format!("Transformation {} not found", name))
+            .ok_or_else(|| format!("Transformation {name} not found"))
             .and_then(|f| f(payload))
     }
 }

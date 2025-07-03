@@ -100,9 +100,7 @@ impl BridgeEventStreamValidator {
 
     pub fn validate(&self) -> Result<(), String> {
         if self.captured_events.len() != self.expected_events.len() {
-            return Err(format!(
-                "Event count mismatch: expected {}, got {}",
-                self.expected_events.len(),
+            return Err(format!("Event count mismatch: expected {self.expected_events.len(}, got {}"),
                 self.captured_events.len()
             ));
         }
@@ -112,10 +110,7 @@ impl BridgeEventStreamValidator {
             .enumerate()
         {
             if expected != actual {
-                return Err(format!(
-                    "Event mismatch at position {}: expected {:?}, got {:?}",
-                    i, expected, actual
-                ));
+                return Err(format!("Event mismatch at position {i}: expected {:?}, got {:?}", expected, actual));
             }
         }
 
@@ -216,7 +211,7 @@ impl ServiceDiscoveryManager {
                 ("claude-3-sonnet".to_string(), vec!["chat".to_string(), "code".to_string()]),
             ],
             ProviderType::Custom(name) => vec![
-                (format!("{}-service", name), vec!["custom".to_string()]),
+                (format!("{name}-service"), vec!["custom".to_string()]),
             ],
         };
 
@@ -262,8 +257,7 @@ impl ConnectionPoolManager {
             return Err("Connection pool exhausted".to_string());
         }
 
-        let conn_id = format!("conn_{}_{}", 
-            self.active_connections.len(),
+        let conn_id = format!("conn_{self.active_connections.len(}_{}"),
             chrono::Utc::now().timestamp_millis()
         );
 

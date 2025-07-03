@@ -389,10 +389,7 @@ impl Provider for OllamaProvider {
                 Ok(HealthStatus::Healthy)
             }
             Ok(response) => {
-                Ok(HealthStatus::Degraded(format!(
-                    "Ollama returned status: {}",
-                    response.status()
-                )))
+                Ok(HealthStatus::Degraded(format!("Ollama returned status: {}", response.status())))
             }
             Err(e) => {
                 Ok(HealthStatus::Unhealthy(format!(
