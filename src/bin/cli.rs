@@ -358,7 +358,7 @@ async fn list_models(
     // Send command
     println!("Fetching available models{}...", 
         provider.as_ref()
-            .map(|p| format!(" for {}", p))
+            .map(|p| format!(" for {p}"))
             .unwrap_or_default()
     );
     client
@@ -382,7 +382,7 @@ async fn list_models(
                         for model in models {
                             println!("  • {}", model.name);
                             if let Some(desc) = model.description {
-                                println!("    {}", desc);
+                                println!("    {desc}");
                             }
                             if !model.capabilities.is_empty() {
                                 println!("    Capabilities: {}", model.capabilities.join(", "));
@@ -428,7 +428,7 @@ async fn health_check(
     // Send command
     println!("Checking health{}...", 
         provider.as_ref()
-            .map(|p| format!(" for {}", p))
+            .map(|p| format!(" for {p}"))
             .unwrap_or_default()
     );
     client
